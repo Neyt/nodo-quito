@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NODO — Cocinas de producción para delivery · Quito</title>
+<meta name="description" content="Estamos diseñando la primera cocina de producción para delivery pensada como tal en Quito. Está en planos. Queremos que la diseñes tú.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#0B1017;
+  --plano:#12365E;
+  --plano-alt:#1B4E86;
+  --linea:rgba(27,78,134,.28);
+  --papel:#EEF1F5;
+  --papel-2:#E3E8EF;
+  --acero:#7C8899;
+  --senal:#F2B705;
+  --blanco:#FBFCFD;
+  --ok:#1F7A5A;
+  --max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--papel);
+  color:var(--tinta);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:'Archivo',sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- eyebrow / etiquetas de plano ---------- */
+.tag{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--plano-alt);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.tag::before{content:"";width:22px;height:1px;background:var(--senal)}
+
+/* ---------- barra superior ---------- */
+.bar{
+  position:sticky;top:0;z-index:60;background:rgba(238,241,245,.93);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--linea);
+}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo{font-family:'Archivo',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em}
+.logo span{color:var(--senal)}
+.bar .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--acero)}
+@media(max-width:720px){.bar .meta{display:none}}
+.btn-top{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--tinta);color:var(--blanco);
+  padding:11px 18px;border-radius:2px;text-decoration:none;transition:background .18s;
+}
+.btn-top:hover{background:var(--plano)}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 46px;position:relative;overflow:hidden}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--linea) 1px,transparent 1px),linear-gradient(90deg,var(--linea) 1px,transparent 1px);
+  background-size:44px 44px;opacity:.42;
+  -webkit-mask-image:radial-gradient(120% 75% at 78% 12%,#000 0%,transparent 68%);
+          mask-image:radial-gradient(120% 75% at 78% 12%,#000 0%,transparent 68%);
+}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(40px,6.6vw,80px);margin:22px 0 0;max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--plano);display:block}
+.hero .lede{margin-top:26px;max-width:54ch;font-size:19.5px;color:#31404F}
+.hero .lede strong{color:var(--tinta);font-weight:600}
+.hero .cta-row{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.cta{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  background:var(--senal);color:var(--tinta);border:0;padding:16px 26px;border-radius:2px;
+  text-decoration:none;cursor:pointer;transition:transform .15s,box-shadow .15s;
+  box-shadow:0 2px 0 rgba(11,16,23,.9);
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 4px 0 rgba(11,16,23,.9)}
+.cta:active{transform:translateY(0);box-shadow:0 1px 0 rgba(11,16,23,.9)}
+.cta-note{font-size:14px;color:var(--acero)}
+
+/* ---------- franja de estado ---------- */
+.estado{border-block:1px solid var(--linea);background:var(--papel-2)}
+.estado .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--linea)}
+.estado .cell{background:var(--papel-2);padding:22px 20px}
+.estado .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--acero)}
+.estado .v{font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;margin-top:7px;letter-spacing:-.02em}
+.estado .v.si{color:var(--ok)}
+.estado .v.no{color:var(--plano)}
+@media(max-width:820px){.estado .wrap{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- secciones ---------- */
+section{padding:80px 0}
+.sec-head{max-width:62ch;margin-bottom:44px}
+.sec-head h2{font-size:clamp(28px,4vw,44px);margin-top:16px}
+.sec-head p{margin-top:16px;color:#31404F;font-size:18px}
+
+/* ---------- problema ---------- */
+.probs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:900px){.probs{grid-template-columns:1fr}}
+.prob{background:var(--blanco);border:1px solid var(--linea);padding:28px 24px;position:relative}
+.prob .n{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--senal);font-weight:600}
+.prob h3{font-size:20px;margin:12px 0 10px;letter-spacing:-.02em}
+.prob p{font-size:15.5px;color:#3A4856}
+
+/* ---------- plano (signature) ---------- */
+.plano-zona{background:var(--plano);color:var(--blanco);padding:80px 0}
+.plano-zona .tag{color:var(--senal)}
+.plano-zona .tag::before{background:var(--senal)}
+.plano-zona h2{color:var(--blanco)}
+.plano-zona .sec-head p{color:#B9CBDE}
+.plano-box{
+  border:1px solid rgba(255,255,255,.22);background:
+    linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+  background-size:30px 30px;padding:30px;
+}
+.plano-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+@media(max-width:900px){.plano-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.plano-grid{grid-template-columns:repeat(2,1fr)}}
+.mod{
+  aspect-ratio:1/.86;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.05);
+  display:flex;flex-direction:column;justify-content:space-between;padding:11px;cursor:default;
+  transition:background .16s,border-color .16s,transform .16s;
+}
+.mod:hover,.mod:focus-visible{background:var(--senal);border-color:var(--senal);color:var(--tinta);transform:translateY(-3px);outline:none}
+.mod .id{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;opacity:.72}
+.mod:hover .id,.mod:focus-visible .id{opacity:1}
+.mod .m2{font-family:'Archivo',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.02em}
+.mod.serv{background:rgba(255,255,255,.16);border-style:dashed}
+.mod.serv:hover{background:rgba(255,255,255,.24);color:var(--blanco);border-color:rgba(255,255,255,.5);transform:none}
+.cotas{display:flex;justify-content:space-between;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:#9FB6CE}
+.plano-nota{
+  margin-top:22px;padding:16px 18px;border-left:2px solid var(--senal);
+  font-size:14.5px;color:#C6D6E6;background:rgba(0,0,0,.16);
+}
+
+/* ---------- incluye ---------- */
+.incluye{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--linea);background:var(--linea);gap:1px}
+@media(max-width:760px){.incluye{grid-template-columns:1fr}}
+.item{background:var(--blanco);padding:22px 24px;display:flex;gap:15px;align-items:flex-start}
+.item .mark{color:var(--senal);font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;flex:none;margin-top:2px}
+.item b{display:block;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.item span{font-size:14.5px;color:#4A5866}
+
+/* ---------- referencia lima ---------- */
+.lima{background:var(--papel-2);border-block:1px solid var(--linea)}
+.tabla{width:100%;border-collapse:collapse;background:var(--blanco);border:1px solid var(--linea)}
+.tabla th,.tabla td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--linea);font-size:15.5px}
+.tabla th{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--blanco);background:var(--plano);font-weight:600;border-bottom:0;
+}
+.tabla td.num{font-family:'IBM Plex Mono',monospace;font-weight:500}
+.tabla tr:last-child td{border-bottom:0}
+.fuente{margin-top:14px;font-size:13.5px;color:var(--acero)}
+
+/* ---------- formulario ---------- */
+.form-zona{background:var(--tinta);color:var(--blanco);padding:84px 0}
+.form-zona .tag{color:var(--senal)}
+.form-zona .tag::before{background:var(--senal)}
+.form-zona h2{color:var(--blanco);font-size:clamp(28px,4vw,44px);margin-top:16px}
+.form-zona .sec-head p{color:#9AA9B8}
+.progreso{height:3px;background:rgba(255,255,255,.14);margin-bottom:34px}
+.progreso i{display:block;height:100%;background:var(--senal);width:0;transition:width .3s}
+form{display:grid;gap:26px;max-width:760px}
+.campo label{display:block;font-size:15.5px;font-weight:500;margin-bottom:10px;color:#E4EAF0}
+.campo .hint{display:block;font-weight:400;font-size:13.5px;color:#8E9EAF;margin-top:4px}
+input[type=text],input[type=email],input[type=number],select,textarea{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);
+  color:var(--blanco);font-family:'IBM Plex Sans',sans-serif;font-size:16px;
+  padding:13px 15px;border-radius:2px;
+}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--senal);outline-offset:1px;border-color:transparent}
+select option{background:var(--tinta);color:var(--blanco)}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.par{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip input{position:absolute;opacity:0;width:0;height:0}
+.chip span{
+  display:inline-block;padding:10px 16px;border:1px solid rgba(255,255,255,.24);
+  font-family:'IBM Plex Mono',monospace;font-size:13px;cursor:pointer;transition:all .15s;border-radius:2px;
+}
+.chip input:checked+span{background:var(--senal);color:var(--tinta);border-color:var(--senal);font-weight:600}
+.chip input:focus-visible+span{outline:2px solid var(--senal);outline-offset:2px}
+.enviar{
+  background:var(--senal);color:var(--tinta);border:0;padding:18px 30px;
+  font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;cursor:pointer;border-radius:2px;justify-self:start;transition:transform .15s;
+}
+.enviar:hover{transform:translateY(-2px)}
+.enviar:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.privacidad{font-size:13.5px;color:#8E9EAF;max-width:56ch}
+.gracias{
+  display:none;border:1px solid var(--senal);padding:34px 30px;background:rgba(242,183,5,.09);
+}
+.gracias.on{display:block}
+.gracias h3{font-size:26px;color:var(--senal)}
+.gracias p{margin-top:12px;color:#D6DEE6;font-size:16.5px;max-width:56ch}
+
+/* ---------- footer ---------- */
+footer{padding:42px 0;border-top:1px solid var(--linea)}
+footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+footer p{font-size:13.5px;color:var(--acero)}
+.admin{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--acero);
+  background:none;border:0;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;
+}
+.admin:hover{color:var(--plano)}
+#panel{display:none;margin-top:26px;border:1px solid var(--linea);background:var(--blanco);padding:22px}
+#panel.on{display:block}
+#panel h4{font-family:'Archivo',sans-serif;font-weight:800;font-size:17px;margin-bottom:14px}
+#panel pre{font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:pre-wrap;max-height:340px;overflow:auto;color:#33414F}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="logo">NOD<span>O</span></div>
+    <div class="meta">Quito · Proyecto en planos</div>
+    <a href="#encuesta" class="btn-top">Responder</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">Cocinas de producción para delivery · Quito</span>
+    <h1>Estamos diseñando la primera cocina<em>hecha para delivery en Quito.</em></h1>
+    <p class="lede">Todavía está en planos. Antes de definir un solo metro cuadrado queremos saber qué necesita quien va a cocinar acá. <strong>Seis minutos</strong> y te mandamos el resumen de lo que respondió el resto del sector.</p>
+  </div>
+</header><section class="form-zona" id="encuesta">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">Encuesta a operadores</span>
+      <h2>Diseñá la cocina con nosotros.</h2>
+      <p>Para dueños y gerentes de restaurantes con delivery en Quito. Las primeras seis preguntas son las que más nos sirven; el resto es opcional.</p>
+    </div>
+    <div class="progreso"><i id="barra"></i></div>
+
+    <form id="f" novalidate>
+      <div class="campo">
+        <label for="marca">Nombre de tu marca o restaurante</label>
+        <input type="text" id="marca" name="marca" required>
+      </div>
+
+      <div class="par">
+        <div class="campo">
+          <label for="cargo">Tu rol</label>
+          <select id="cargo" name="cargo" required>
+            <option value="">Elegí una opción</option>
+            <option>Propietario</option>
+            <option>Gerente general</option>
+            <option>Gerente de operaciones</option>
+            <option>Chef ejecutivo</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="locales">Locales que operás en Quito</label>
+          <select id="locales" name="locales" required>
+            <option value="">Elegí una opción</option>
+            <option>1</option><option>2 a 4</option><option>5 a 9</option><option>10 o más</option>
+            <option>Solo delivery, sin local</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Porcentaje de tus ventas que viene de delivery</label>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="pct_delivery" value="0-20"><span>0–20%</span></label>
+          <label class="chip"><input type="radio" name="pct_delivery" value="21-40"><span>21–40%</span></label>
+          <label class="chip"><input type="radio" name="pct_delivery" value="41-60"><span>41–60%</span></label>
+          <label class="chip"><input type="radio" name="pct_delivery" value="61-80"><span>61–80%</span></label>
+          <label class="chip"><input type="radio" name="pct_delivery" value="81-100"><span>81–100%</span></label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>¿Buscaste un espacio adicional de cocina en los últimos 24 meses?</label>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="busco" value="si"><span>Sí, busqué</span></label>
+          <label class="chip"><input type="radio" name="busco" value="ahora"><span>Lo estoy evaluando</span></label>
+          <label class="chip"><input type="radio" name="busco" value="no"><span>No</span></label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="freno">Si buscaste y no concretaste, ¿qué te frenó?
+          <span class="hint">Precio, no encontraste el espacio, costo de adecuación, permisos, otra cosa.</span>
+        </label>
+        <input type="text" id="freno" name="freno">
+      </div>
+
+      <div class="campo">
+        <label for="dificil">Lo más difícil de montar una cocina de delivery hoy en Quito
+          <span class="hint">Escribilo con tus palabras. Esta respuesta es la que más nos sirve.</span>
+        </label>
+        <textarea id="dificil" name="dificil" rows="3"></textarea>
+      </div>
+
+      <div class="par">
+        <div class="campo">
+          <label for="m2_necesito">m² que necesitarías por cocina</label>
+          <input type="number" id="m2_necesito" name="m2_necesito" min="1" placeholder="Ej. 35">
+        </div>
+        <div class="campo">
+          <label for="m2_oficina">m² de oficina anexa, si la necesitás</label>
+          <input type="number" id="m2_oficina" name="m2_oficina" min="0" placeholder="Ej. 8 · 0 si no">
+        </div>
+      </div>
+
+      <div class="par">
+        <div class="campo">
+          <label for="renta_hoy">Arriendo mensual que pagás hoy por tu cocina (USD)</label>
+          <input type="number" id="renta_hoy" name="renta_hoy" min="0" placeholder="Ej. 900">
+        </div>
+        <div class="campo">
+          <label for="m2_hoy">m² de esa cocina</label>
+          <input type="number" id="m2_hoy" name="m2_hoy" min="1" placeholder="Ej. 60">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="capex_hoy">Lo que invertiste en adecuarla (USD, aproximado)
+          <span class="hint">Extracción, trampa de grasa, instalaciones. Si no la adecuaste vos, dejalo vacío.</span>
+        </label>
+        <input type="number" id="capex_hoy" name="capex_hoy" min="0" placeholder="Ej. 12000">
+      </div>
+
+      <div class="par">
+        <div class="campo">
+          <label for="p_barato">Por un módulo listo para operar: ¿a qué precio mensual te parecería barato? (USD)</label>
+          <input type="number" id="p_barato" name="p_barato" min="0" placeholder="Ej. 800">
+        </div>
+        <div class="campo">
+          <label for="p_caro">¿Y a qué precio ya no lo considerarías? (USD)</label>
+          <input type="number" id="p_caro" name="p_caro" min="0" placeholder="Ej. 2500">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Si existiera hoy, ¿cuándo lo considerarías?</label>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="plazo" value="inmediato"><span>Ya mismo</span></label>
+          <label class="chip"><input type="radio" name="plazo" value="6m"><span>En 6 meses</span></label>
+          <label class="chip"><input type="radio" name="plazo" value="12m"><span>En 12 meses</span></label>
+          <label class="chip"><input type="radio" name="plazo" value="no"><span>No me sirve</span></label>
+        </div>
+      </div>
+
+      <div class="par">
+        <div class="campo">
+          <label for="email">Correo</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="campo">
+          <label for="tel">WhatsApp <span class="hint">Opcional</span></label>
+          <input type="text" id="tel" name="tel">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>¿Podemos llamarte 20 minutos para entender mejor tu operación?</label>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="entrevista" value="si"><span>Sí, con gusto</span></label>
+          <label class="chip"><input type="radio" name="entrevista" value="no"><span>Prefiero que no</span></label>
+        </div>
+      </div>
+
+      <p class="privacidad">Usamos tus respuestas solo para dimensionar el proyecto. No las compartimos con terceros ni las publicamos con tu nombre. El resumen que te enviamos va agregado y anónimo.</p>
+      <button type="submit" class="enviar" id="btn">Enviar respuestas</button>
+    </form>
+
+    <div class="gracias" id="gracias">
+      <h3>Listo. Gracias.</h3>
+      <p>Tus respuestas entran directo al dimensionamiento. Cuando cerremos el relevamiento te mandamos el resumen del sector — precios, metrajes y qué está pidiendo el resto. Si marcaste que sí a la llamada, te escribimos esta semana.</p>
+    </div>
+  </div>
+</section><div class="estado">
+  <div class="wrap">
+    <div class="cell"><div class="k">Etapa</div><div class="v">Diseño</div></div>
+    <div class="cell"><div class="k">Ubicación</div><div class="v no">Zona central</div></div>
+    <div class="cell"><div class="k">Apertura</div><div class="v">Por definir</div></div>
+    <div class="cell"><div class="k">Cupos reservables hoy</div><div class="v no">Ninguno</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">El punto de partida</span>
+      <h2>Adaptar una casa vieja no es lo mismo que construir una cocina.</h2>
+      <p>Tres cosas se repiten en cada operación de delivery que arranca en un local que no fue hecho para eso. Si tenés otra, decínosla en la encuesta.</p>
+    </div>
+    <div class="probs">
+      <div class="prob reveal">
+        <div class="n">01 — INSTALACIONES</div>
+        <h3>La trampa de grasa se resuelve tarde y cara</h3>
+        <p>Extracción, trampa de grasa y manejo de residuos son la partida más costosa de habilitar una cocina. En un local adaptado casi siempre se descubren después de firmar el contrato.</p>
+      </div>
+      <div class="prob reveal">
+        <div class="n">02 — LOGÍSTICA</div>
+        <h3>El repartidor pierde minutos en la puerta</h3>
+        <p>Timbre, portería, escaleras, sin zona de espera. Cada minuto de recogida se paga en calificación de la app y en pedidos que no se toman.</p>
+      </div>
+      <div class="prob reveal">
+        <div class="n">03 — PERMISOS</div>
+        <h3>El trámite se hace una vez por cada cocina</h3>
+        <p>Uso de suelo, ARCSA, bomberos. Cada operador vuelve a empezar el mismo camino, solo, y sin saber cuánto va a tardar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="plano-zona">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">Anteproyecto</span>
+      <h2>Así se está dibujando.</h2>
+      <p>Una planta de módulos independientes con servicios compartidos y una sola zona de despacho. Las cotas todavía se mueven: eso es exactamente lo que queremos definir con tus respuestas.</p>
+    </div>
+    <div class="plano-box reveal">
+      <div class="plano-grid" id="grid"></div>
+      <div class="cotas">
+        <span>PLANTA TIPO — ESC. REFERENCIAL</span>
+        <span id="cota-total">—</span>
+      </div>
+      <div class="plano-nota"><b>Nota del proyecto:</b> el número de módulos y su superficie son provisionales. Dependen del levantamiento arquitectónico y de lo que digan los operadores en esta encuesta. Si necesitás 60 m² y hoy dibujamos módulos de 30, el plano cambia.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">Alcance previsto</span>
+      <h2>Qué entregaría cada módulo.</h2>
+      <p>La idea es que el operador llegue con su equipo humano y su receta, no con un contratista. Marcá en la encuesta lo que te sobra y lo que te falta.</p>
+    </div>
+    <div class="incluye reveal">
+      <div class="item"><span class="mark">→</span><div><b>Cocina industrial instalada</b><span>Línea caliente, campana y extracción dimensionadas por módulo.</span></div></div>
+      <div class="item"><span class="mark">→</span><div><b>Trampa de grasa y desagües</b><span>Resueltos a nivel de edificio, no por operador.</span></div></div>
+      <div class="item"><span class="mark">→</span><div><b>Zona de despacho para repartidores</b><span>Acceso directo desde la calle, sin portería ni escaleras.</span></div></div>
+      <div class="item"><span class="mark">→</span><div><b>Oficina anexa</b><span>Un espacio pequeño para quien supervisa la operación.</span></div></div>
+      <div class="item"><span class="mark">→</span><div><b>Cámaras de frío y almacenamiento</b><span>Por definir si conviene compartido o por módulo. Tu respuesta decide.</span></div></div>
+      <div class="item"><span class="mark">→</span><div><b>Permisos gestionados</b><span>Habilitación del inmueble tramitada una vez, para todos.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="lima">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tag">Referencia regional</span>
+      <h2>Dónde el modelo ya existe.</h2>
+      <p>Lima tiene alrededor de 280 cocinas de este tipo repartidas en 18 sedes. Publicamos los precios de referencia porque queremos contrastarlos con la realidad de Quito, no copiarlos.</p>
+    </div>
+    <table class="tabla reveal">
+      <thead><tr><th>Formato</th><th>Superficie</th><th>Renta mensual</th><th>Por m²</th></tr></thead>
+      <tbody>
+        <tr><td>Módulo pequeño</td><td class="num">8 – 15 m²</td><td class="num">USD 994</td><td class="num">≈ USD 83</td></tr>
+        <tr><td>Módulo grande</td><td class="num">23 – 44 m²</td><td class="num">USD 2.159</td><td class="num">≈ USD 64</td></tr>
+      </tbody>
+    </table>
+    <p class="fuente">Fuente: relevamiento de Binswanger Perú sobre el mercado de cocinas de delivery en Lima. Son valores de otro país y otro momento: sirven para orientar la conversación, no para fijar un precio en Quito.</p>
+  </div>
+</section>
+
+
+
+<footer>
+  <div class="wrap">
+    <p>NODO · Proyecto en desarrollo · Quito, Ecuador · <a href="mailto:info@neytorres.com" style="color:var(--plano-alt)">info@neytorres.com</a></p>
+    <button class="admin" id="verAdmin">Respuestas</button>
+  </div>
+  <div class="wrap"><div id="panel"><h4>Respuestas guardadas</h4><pre id="dump">Cargando…</pre></div></div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN — editar solo estas dos líneas
+   ------------------------------------------------------------
+   CORREO   : a dónde llegan las respuestas.
+   ENDPOINT : URL de Formspree o Web3Forms. Mientras esté vacía,
+              el formulario abre el correo del visitante con las
+              respuestas ya escritas y dirigidas a CORREO.
+              Funciona, pero pierde respuestas: configurá el
+              endpoint antes de difundir la página.
+   ============================================================ */
+const CORREO   = "info@neytorres.com";
+const ENDPOINT = "";
+
+/* ---------- plano: módulos provisionales ---------- */
+/* Ajustar cuando esté el levantamiento arquitectónico real. */
+const MODULOS = [
+  {id:"M-01", m2:38},{id:"M-02", m2:38},{id:"M-03", m2:32},
+  {id:"M-04", m2:32},{id:"M-05", m2:28},{id:"M-06", m2:28},
+  {id:"M-07", m2:38},{id:"M-08", m2:32},{id:"M-09", m2:32},
+  {id:"M-10", m2:28},{id:"M-11", m2:28},{id:"SERV", m2:0, serv:true, txt:"Despacho"}
+];
+const grid = document.getElementById('grid');
+let suma = 0;
+MODULOS.forEach(m=>{
+  const d = document.createElement('div');
+  d.className = 'mod' + (m.serv ? ' serv' : '');
+  d.tabIndex = 0;
+  d.innerHTML = '<span class="id">'+m.id+'</span><span class="m2">'+(m.serv ? m.txt : m.m2+' m²')+'</span>';
+  grid.appendChild(d);
+  if(!m.serv) suma += m.m2;
+});
+document.getElementById('cota-total').textContent = MODULOS.filter(m=>!m.serv).length + ' MÓDULOS · ' + suma + ' m² ARRENDABLES (PROVISIONAL)';
+
+/* ---------- reveal ---------- */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- progreso ---------- */
+const form = document.getElementById('f');
+const barra = document.getElementById('barra');
+function actualizarProgreso(){
+  const grupos = new Set();
+  form.querySelectorAll('input[type=radio]').forEach(r=>grupos.add(r.name));
+  const simples = [...form.querySelectorAll('input:not([type=radio]), select, textarea')];
+  const total = simples.length + grupos.size;
+  let hechos = simples.filter(i=>i.value.trim()!=='').length;
+  grupos.forEach(g=>{ if(form.querySelector('input[name="'+g+'"]:checked')) hechos++; });
+  barra.style.width = Math.round(hechos/total*100)+'%';
+}
+form.addEventListener('input', actualizarProgreso);
+form.addEventListener('change', actualizarProgreso);
+
+/* ---------- envío ---------- */
+form.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const btn = document.getElementById('btn');
+  const datos = {};
+  new FormData(form).forEach((v,k)=>{ datos[k] = v; });
+  datos.enviado = new Date().toISOString();
+
+  if(!datos.marca || !datos.email){
+    alert('Falta el nombre de la marca o el correo.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+
+  const ETIQUETAS = {
+    marca:'Marca / restaurante', cargo:'Rol', locales:'Locales en Quito',
+    pct_delivery:'% ventas delivery', busco:'¿Buscó espacio 24 meses?',
+    freno:'Qué lo frenó', dificil:'Lo más difícil hoy',
+    m2_necesito:'m² que necesita', m2_oficina:'m² oficina anexa',
+    renta_hoy:'Arriendo actual USD', m2_hoy:'m² actuales',
+    capex_hoy:'Inversión en adecuación USD',
+    p_barato:'Precio "barato" USD', p_caro:'Precio "no lo considero" USD',
+    plazo:'Cuándo lo consideraría', email:'Correo', tel:'WhatsApp',
+    entrevista:'Acepta entrevista', enviado:'Enviado'
+  };
+
+  function comoTexto(d){
+    return Object.keys(ETIQUETAS)
+      .filter(k => d[k] !== undefined && String(d[k]).trim() !== '')
+      .map(k => ETIQUETAS[k] + ': ' + d[k])
+      .join('\n');
+  }
+
+  function exito(){
+    form.style.display = 'none';
+    document.querySelector('.progreso').style.display = 'none';
+    const g = document.getElementById('gracias');
+    g.classList.add('on');
+    g.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  try{
+    if(ENDPOINT){
+      const r = await fetch(ENDPOINT,{
+        method:'POST',
+        headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+        body:JSON.stringify(Object.assign({_replyto: datos.email, _subject: 'NODO · encuesta — ' + datos.marca}, datos))
+      });
+      if(!r.ok) throw new Error('endpoint');
+      exito();
+    }else{
+      try{ await window.storage.set('resp:' + Date.now(), JSON.stringify(datos), true); }catch(e){}
+      const asunto = encodeURIComponent('NODO · encuesta — ' + datos.marca);
+      const cuerpo = encodeURIComponent(comoTexto(datos));
+      window.location.href = 'mailto:' + CORREO + '?subject=' + asunto + '&body=' + cuerpo;
+      setTimeout(exito, 600);
+    }
+  }catch(err){
+    btn.disabled = false;
+    btn.textContent = 'Enviar respuestas';
+    alert('No se pudo enviar. Escribinos a ' + CORREO + ' y lo resolvemos.');
+  }
+});
+
+/* ---------- panel de respuestas ---------- */
+document.getElementById('verAdmin').addEventListener('click', async ()=>{
+  const panel = document.getElementById('panel');
+  panel.classList.toggle('on');
+  if(!panel.classList.contains('on')) return;
+  const dump = document.getElementById('dump');
+  dump.textContent = 'Cargando…';
+  try{
+    const lista = await window.storage.list('resp:', true);
+    if(!lista || !lista.keys || !lista.keys.length){
+      dump.textContent = 'Todavía no hay respuestas.';
+      return;
+    }
+    const filas = [];
+    for(const k of lista.keys){
+      try{
+        const r = await window.storage.get(k, true);
+        filas.push(JSON.parse(r.value));
+      }catch(e){}
+    }
+    dump.textContent = filas.length + ' respuesta(s)\n\n' + JSON.stringify(filas, null, 2);
+  }catch(e){
+    dump.textContent = 'No se pudieron leer las respuestas en este entorno.';
+  }
+});
+</script>
+</body>
+</html>
